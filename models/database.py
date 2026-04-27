@@ -37,22 +37,34 @@ def init_db():
     if cursor.execute("SELECT COUNT(*) FROM recetas").fetchone()[0] == 0:
         recetas_ejemplo = [
             (
-                "Pasta al tomate",
-                "Un clásico italiano, rápido y delicioso.",
-                "400g de pasta\n2 tazas de salsa de tomate\n2 dientes de ajo\nAceite de oliva\nSal y pimienta\nAlbahaca fresca",
-                "1. Hervir agua con sal y cocinar la pasta al dente.\n2. Calentar aceite en una sartén y dorar el ajo picado.\n3. Agregar la salsa de tomate y cocinar 10 minutos a fuego medio.\n4. Mezclar la pasta con la salsa y servir con albahaca.",
+                "Galletitas de café",
+                "Galletitas crujientes con un toque de café, perfectas para acompañar tu bebida favorita.",
+                "200g de manteca\n150g de azúcar\n1 huevo\n300g de harina\n2 cucharaditas de café instantáneo disuelto en 1 cucharada de agua caliente",
+                "1. Batir la manteca y el azúcar hasta obtener una mezcla cremosa.\n2. Agregar el huevo y el café disuelto, mezclar bien.\n3. Incorporar la harina poco a poco hasta formar una masa homogénea.\n4. Formar bolitas con la masa, colocarlas en una bandeja para hornear y aplastarlas ligeramente.\n5. Hornear a 180°C por 12-15 minutos o hasta que estén doradas.",
             ),
             (
-                "Ensalada César",
-                "Ensalada fresca y cremosa, perfecta como entrada.",
-                "1 lechuga romana\n100g de queso parmesano\nCrutones\n2 cucharadas de mayonesa\n1 limón\nSal y pimienta",
-                "1. Lavar y trozar la lechuga.\n2. Preparar el aderezo mezclando mayonesa, jugo de limón, sal y pimienta.\n3. Mezclar la lechuga con el aderezo.\n4. Agregar crutones y parmesano rallado por encima.",
-            ),
-            (
-                "Arroz con leche",
+                "Brownies",
                 "Postre tradicional reconfortante, cremoso y dulce.",
-                "1 taza de arroz\n1 litro de leche\n3/4 taza de azúcar\n1 rama de canela\nCáscara de limón\nCanela en polvo",
-                "1. Lavar el arroz y hervirlo 5 minutos en agua.\n2. Escurrir y agregar la leche, canela en rama y cáscara de limón.\n3. Cocinar a fuego bajo revolviendo frecuentemente por 30 minutos.\n4. Agregar el azúcar y cocinar 10 minutos más.\n5. Servir frío con canela en polvo.",
+                "200g de mantequilla\n150g de azúcar\n100g de chocolate\n2 huevos\n100g de harina\n1 cucharadita de polvo para hornear",
+                "1. Derretir la mantequilla y el chocolate.\n2. Mezclar los ingredientes secos en un tazón.\n3. Batir los huevos y el azúcar hasta que estén espumosos.\n4. Incorporar la mezcla líquida a los ingredientes secos.\n5. Verter la mezcla en un molde y hornear a 180°C por 20-25 minutos.",
+            ),
+            (
+                "Cookies",
+                "Las cookies mas húmedas y al estilo nyc.",
+                "200g de manteca\n150g de azucar mascabo\n80g de azucar\n400g de harina 0000\n2g de polvo para hornear\n150g de chocolate picado (aprox.)",
+                "1. Mezclar la manteca y los azúcares hasta obtener una masa suave.\n2. Agregar los huevos y la vainilla.\n3. Incorporar la harina y el polvo para hornear.\n4. Agregar el chocolate picado.\n5. Formar cookies y hornear a 180°C por 10-12 minutos.",
+            ),
+            (
+                "Noquis de calabaza",
+                "Postre tradicional reconfortante, cremoso y dulce.",
+                "200g de manteca\n150g de azúcar\n100g de calabaza cocida\n2 huevos\n100g de harina\n1 cucharadita de polvo para hornear",
+                "1. Derretir la mantequilla y la calabaza cocida.\n2. Mezclar los ingredientes secos en un tazón.\n3. Batir los huevos y el azúcar hasta que estén espumosos.\n4. Incorporar la mezcla líquida a los ingredientes secos.\n5. Verter la mezcla en un molde y hornear a 180°C por 20-25 minutos.",
+            ),
+            (
+                "Hambuguesas smash",
+                "Hamburguesas al estilo neoyorquino, con una costra crujiente y un interior jugoso.",
+                "500g de carne molida\nSal y pimienta al gusto\nPan de hamburguesa\nQueso cheddar\nLechuga, tomate, cebolla (opcional)",
+                "1. Formar bolas con la carne molida y aplastarlas para formar hamburguesas delgadas.\n2. Cocinar en una sartén caliente hasta que estén doradas por ambos lados y el queso se derrita.\n3. Armar la hamburguesa con el pan, la carne, el queso y los vegetales al gusto.",
             ),
         ]
         cursor.executemany(
