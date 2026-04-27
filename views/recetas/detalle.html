@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block titulo %}{{ receta['nombre'] }} · VICOOK{% endblock %}
+
+{% block contenido %}
+<div class="container-lg py-5">
+  
+  <!-- BACK BUTTON -->
+  <a href="{{ url_for('recetas.index') }}" class="btn btn-outline-primary btn-sm mb-4">
+    ← Volver a todas las recetas
+  </a>
+
+  <!-- RECIPE HEADER -->
+  <article class="recipe-detail">
+    <div class="detail-header mb-5 pb-4 border-bottom-primary">
+      <div class="emoji-large mb-3">🍴</div>
+      <h1 class="display-5 fw-bold mb-3">{{ receta['nombre'] }}</h1>
+      <p class="lead text-muted">{{ receta['descripcion'] }}</p>
+    </div>
+
+    <!-- RECIPE CONTENT -->
+    <div class="row g-4">
+      
+      <!-- INGREDIENTS -->
+      <div class="col-lg-5">
+        <div class="recipe-section">
+          <h2 class="section-title mb-4">
+            <img src="{{ url_for('static', filename='img/ingredientes.png') }}" alt="Ingredientes" class="section-icon-img">
+            Ingredientes
+          </h2>
+          <ul class="ingredient-list list-unstyled">
+            {% for linea in receta['ingredientes'].split('\n') %}
+              {% if linea.strip() %}
+                <li class="ingredient-item">
+                  <span class="ingredient-dot">•</span>
+                  {{ linea.strip() }}
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+
+      <!-- PREPARATION STEPS -->
+      <div class="col-lg-7">
+        <div class="recipe-section">
+          <h2 class="section-title mb-4">
+            <img src="{{ url_for('static', filename='img/preparacion.png') }}" alt="Preparación" class="section-icon-img">
+            Pasos de preparación
+          </h2>
+          <ol class="steps-list">
+            {% for linea in receta['pasos'].split('\n') %}
+              {% if linea.strip() %}
+                <li class="step-item">{{ linea.strip().lstrip('0123456789. ') }}</li>
+              {% endif %}
+            {% endfor %}
+          </ol>
+        </div>
+      </div>
+      
+    </div>
+
+  </article>
+</div>
+{% endblock %}

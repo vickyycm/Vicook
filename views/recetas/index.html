@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block titulo %}VICOOK · Inicio{% endblock %}
+
+{% block contenido %}
+<!-- HERO SECTION -->
+<section class="hero-section py-5 text-center">
+  <div class="container-lg">
+    <h1 class="display-4 fw-bold mb-3">Todas tus recetas en un lugar</h1>
+    <p class="lead text-muted mb-4">
+      Explorá nuestra colección o <a href="{{ url_for('recetas.nueva_receta') }}" class="text-decoration-none fw-bold link-highlight">creá la tuya propia</a>
+    </p>
+  </div>
+</section>
+
+<section class="recipes-section py-5">
+  <div class="container-lg">
+    {% if recetas %}
+      <div class="row g-4">
+        {% for receta in recetas %}
+          <div class="col-12 col-sm-6 col-lg-4">
+            <a href="{{ url_for('recetas.detalle', receta_id=receta['id']) }}" class="recipe-card-link text-decoration-none">
+              <div class="recipe-card h-100 shadow-sm">
+                <div class="recipe-card-icon">🍽️</div>
+                <div class="card-body d-flex flex-column">
+                  <h5 class="card-title fw-bold">{{ receta['nombre'] }}</h5>
+                  <p class="card-text text-muted flex-grow-1">
+                    {{ receta['descripcion'][:80] }}{% if receta['descripcion']|length > 80 %}…{% endif %}
+                  </p>
+                  <div class="card-footer-link">
+                    <span>Ver receta →</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="text-center py-5">
+        <div class="empty-state">
+          <p class="fs-5 text-muted mb-3">No hay recetas aún</p>
+          <a href="{{ url_for('recetas.nueva_receta') }}" class="btn btn-primary btn-lg">Creá la primera receta</a>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}
