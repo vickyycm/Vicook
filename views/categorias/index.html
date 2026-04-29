@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block titulo %}Administración de categorías · VICOOK{% endblock %}
+
+{% block contenido %}
+<div class="container-lg py-5">
+  
+  <div class="d-flex justify-content-between align-items-center mb-5">
+    <div>
+      <h1 class="display-5 fw-bold mb-2">Categorías</h1>
+      <p class="text-muted">Administra las categorías de recetas</p>
+    </div>
+    <a href="{{ url_for('recetas.index') }}" class="btn btn-outline-primary btn-lg">
+      ← Volver a recetas
+    </a>
+  </div>
+
+  {% if request.args.get('error') %}
+    <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+      <strong>Error:</strong> {{ request.args.get('error') }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+  {% endif %}
+
+  <div class="mb-5">
+    <a href="{{ url_for('categorias.nueva_categoria') }}" class="btn btn-primary btn-lg">
+      Nueva categoría
+    </a>
+  </div>
+
+  {% if categorias %}
+    <div class="categorias-grid">
+      {% for categoria in categorias %}
+        <div class="categoria-item-card">
+          <div class="categoria-item-header">
+            <h3 class="categoria-item-title">{{ categoria['nombre'] }}</h3>
+            <span class="badge bg-primary fs-6">{{ categoria.get('recetas_count', 0) }} receta{% if categoria.get('recetas_count', 0) != 1 %}s{% endif %}</span>
+          </div>
+          
+          <p class="categoria-item-description">
+            {% if categoria.get('descripcion') %}
+              {{ categoria['descripcion'] }}
+            {% else %}
+              <span class="text-muted fst-italic">Sin descripción</span>
+            {% endif %}
+          </p>
+          
+          <div class="categoria-item-footer">
+            <a href="{{ url_for('categorias.editar_categoria', categoria_id=categoria['id']) }}" class="btn btn-sm btn-outline-primary">
+              Editar
+            </a>
+            <form method="POST" action="{{ url_for('categorias.eliminar_categoria_route', categoria_id=categoria['id']) }}" style="display: inline;">
+              <button type="submit" class="btn btn-sm btn-outline-danger" 
+                      {% if categoria.get('recetas_count', 0) > 0 %}disabled title="No se puede eliminar porque tiene recetas asociadas"{% endif %}
+                      {% if categoria.get('recetas_count', 0) == 0 %}onclick="return confirm('¿Estás seguro de que querés eliminar \"{{ categoria['nombre'] }}\"?')"{% endif %}>
+                Eliminar
+              </button>
+            </form>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="alert alert-info" role="alert">
+      <strong>No hay categorías creadas aún.</strong>
+      <a href="{{ url_for('categorias.nueva_categoria') }}" class="alert-link">Crea la primera categoría aquí.</a>
+    </div>
+  {% endif %}
+
+</div>
+{% endblock %}

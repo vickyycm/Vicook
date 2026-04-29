@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block titulo %}{{ receta['nombre'] }} · VICOOK{% endblock %}
+
+{% block contenido %}
+<div class="recipe-article-container">
+  
+  <article class="recipe-article">
+    <header class="recipe-article-header">
+      {% if receta.get('categoria_nombre') %}
+        <div class="mb-3">
+          <span class="badge bg-primary fs-6">{{ receta['categoria_nombre'] }}</span>
+        </div>
+      {% endif %}
+      
+      <h1 class="recipe-article-title">{{ receta['nombre'] }}</h1>
+      
+      <p class="recipe-article-description">{{ receta['descripcion'] }}</p>
+      
+      <hr class="recipe-separator">
+    </header>
+
+    <div class="recipe-content-grid">
+      <!-- Ingredientes -->
+      <section class="recipe-section-article">
+        <h2 class="section-title-article">
+          <img src="{{ url_for('static', filename='img/ingredientes.png') }}" alt="Ingredientes" class="section-icon-small">
+          Ingredientes
+        </h2>
+        
+        <div class="ingredients-chips">
+          {% for linea in receta['ingredientes'].split('\n') %}
+            {% if linea.strip() %}
+              <span class="ingredient-chip">{{ linea.strip() }}</span>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </section>
+
+      <section class="recipe-section-article">
+        <h2 class="section-title-article">
+          <img src="{{ url_for('static', filename='img/preparacion.png') }}" alt="Preparación" class="section-icon-small">
+          Pasos de preparación
+        </h2>
+        
+        <div class="steps-article">
+          {% for linea in receta['pasos'].split('\n') %}
+            {% if linea.strip() %}
+              <div class="step-article">
+                <div class="step-number">{{ loop.index }}</div>
+                <div class="step-content">
+                  {{ linea.strip().lstrip('0123456789. ') }}
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </section>
+    </div>
+
+    <div class="recipe-article-footer">
+      <div class="d-flex gap-3 mb-3">
+        <a href="{{ url_for('recetas.editar_receta', receta_id=receta['id']) }}" class="btn btn-primary btn-lg flex-grow-1">
+          Editar receta
+        </a>
+        <form method="POST" action="{{ url_for('recetas.eliminar_receta_route', receta_id=receta['id']) }}" style="flex: 1;">
+          <button type="submit" class="btn btn-danger btn-lg w-100" onclick="return confirm('¿Estás seguro de que querés eliminar esta receta?')">
+            Eliminar
+          </button>
+        </form>
+      </div>
+      <a href="{{ url_for('recetas.index') }}" class="btn btn-outline-primary btn-lg w-100">
+        ← Volver a todas las recetas
+      </a>
+    </div>
+  </article>
+
+</div>
+{% endblock %}

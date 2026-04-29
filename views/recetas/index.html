@@ -2,7 +2,6 @@
 {% block titulo %}VICOOK · Inicio{% endblock %}
 
 {% block contenido %}
-<!-- HERO SECTION -->
 <section class="hero-section-landing">
   <div class="container-lg h-100 d-flex flex-column justify-content-center align-items-center">
     <h1 class="display-3 fw-bold mb-3 text-center">Todas tus recetas en un lugar</h1>
@@ -20,7 +19,6 @@
   </div>
 </section>
 
-<!-- CATEGORÍAS SECTION -->
 {% if categorias %}
 <section class="categorias-section py-5">
   <div class="container-lg mb-4">
@@ -45,7 +43,6 @@
 </section>
 {% endif %}
 
-<!-- RECETAS SECTION -->
 <section class="recipes-section py-5" id="recetas">
   <div class="container-lg">
     <h2 class="fs-4 fw-bold mb-4">Recetas destacadas</h2>
@@ -53,23 +50,35 @@
     {% if recetas %}
       <div class="recipes-list">
         {% for receta in recetas %}
-          <a href="{{ url_for('recetas.detalle', receta_id=receta['id']) }}" class="recipe-card-horizontal text-decoration-none">
-            <div class="recipe-card-img">
-              <img src="{{ url_for('static', filename='img/chef.png') }}" alt="{{ receta['nombre'] }}" class="recipe-img">
-            </div>
-            <div class="recipe-card-content">
-              <div class="recipe-header">
-                <h5 class="recipe-title">{{ receta['nombre'] }}</h5>
-                {% if receta.get('categoria_nombre') %}
-                  <span class="badge bg-primary">{{ receta['categoria_nombre'] }}</span>
-                {% endif %}
+          <div class="recipe-card-horizontal">
+            <a href="{{ url_for('recetas.detalle', receta_id=receta['id']) }}" class="text-decoration-none" style="flex: 1; display: flex;">
+              <div class="recipe-card-img">
+                <img src="{{ url_for('static', filename='img/comida.png') }}" alt="{{ receta['nombre'] }}" class="recipe-img">
               </div>
-              <p class="recipe-description">{{ receta['descripcion'] }}</p>
-              <div class="recipe-footer">
-                <span class="read-more">Ver receta →</span>
+              <div class="recipe-card-content">
+                <div class="recipe-header">
+                  <h5 class="recipe-title">{{ receta['nombre'] }}</h5>
+                  {% if receta.get('categoria_nombre') %}
+                    <span class="badge bg-primary">{{ receta['categoria_nombre'] }}</span>
+                  {% endif %}
+                </div>
+                <p class="recipe-description">{{ receta['descripcion'] }}</p>
+                <div class="recipe-footer">
+                  <span class="read-more">Ver receta →</span>
+                </div>
               </div>
+            </a>
+            <div style="display: flex; gap: 0.5rem; padding: 1rem; border-left: 1px solid var(--border-light); background: var(--pale-yellow); flex-direction: column; justify-content: center;">
+              <a href="{{ url_for('recetas.editar_receta', receta_id=receta['id']) }}" class="btn btn-sm btn-outline-primary" title="Editar">
+                Editar
+              </a>
+              <form method="POST" action="{{ url_for('recetas.eliminar_receta_route', receta_id=receta['id']) }}" style="width: 100%;">
+                <button type="submit" class="btn btn-sm btn-outline-danger w-100" title="Eliminar" onclick="return confirm('¿Estás seguro?')">
+                  Eliminar
+                </button>
+              </form>
             </div>
-          </a>
+          </div>
         {% endfor %}
       </div>
     {% else %}
