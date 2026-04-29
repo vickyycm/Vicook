@@ -2,58 +2,71 @@
 {% block titulo %}{{ receta['nombre'] }} · VICOOK{% endblock %}
 
 {% block contenido %}
-<div class="container-lg py-5">
+<div class="recipe-article-container">
   
-  <a href="{{ url_for('recetas.index') }}" class="btn btn-outline-primary btn-sm mb-4">
-    ← Volver a todas las recetas
-  </a>
+  <article class="recipe-article">
+    <!-- Header -->
+    <header class="recipe-article-header">
+      {% if receta.get('categoria_nombre') %}
+        <div class="mb-3">
+          <span class="badge bg-primary fs-6">{{ receta['categoria_nombre'] }}</span>
+        </div>
+      {% endif %}
+      
+      <h1 class="recipe-article-title">{{ receta['nombre'] }}</h1>
+      
+      <p class="recipe-article-description">{{ receta['descripcion'] }}</p>
+      
+      <hr class="recipe-separator">
+    </header>
 
-  <article class="recipe-detail">
-    <div class="detail-header mb-5 pb-4 border-bottom-primary">
-      <div class="emoji-large mb-3">🍴</div>
-      <h1 class="display-5 fw-bold mb-3">{{ receta['nombre'] }}</h1>
-      <p class="lead text-muted">{{ receta['descripcion'] }}</p>
+    <!-- Contenido en dos columnas (desktop) -->
+    <div class="recipe-content-grid">
+      <!-- Ingredientes -->
+      <section class="recipe-section-article">
+        <h2 class="section-title-article">
+          <img src="{{ url_for('static', filename='img/ingredientes.png') }}" alt="Ingredientes" class="section-icon-small">
+          Ingredientes
+        </h2>
+        
+        <div class="ingredients-chips">
+          {% for linea in receta['ingredientes'].split('\n') %}
+            {% if linea.strip() %}
+              <span class="ingredient-chip">{{ linea.strip() }}</span>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </section>
+
+      <!-- Pasos -->
+      <section class="recipe-section-article">
+        <h2 class="section-title-article">
+          <img src="{{ url_for('static', filename='img/preparacion.png') }}" alt="Preparación" class="section-icon-small">
+          Pasos de preparación
+        </h2>
+        
+        <div class="steps-article">
+          {% for linea in receta['pasos'].split('\n') %}
+            {% if linea.strip() %}
+              <div class="step-article">
+                <div class="step-number">{{ loop.index }}</div>
+                <div class="step-content">
+                  {{ linea.strip().lstrip('0123456789. ') }}
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </section>
     </div>
 
-    <div class="row g-4">
-      
-      <div class="col-lg-5">
-        <div class="recipe-section">
-          <h2 class="section-title mb-4">
-            <img src="{{ url_for('static', filename='img/ingredientes.png') }}" alt="Ingredientes" class="section-icon-img">
-            Ingredientes
-          </h2>
-          <ul class="ingredient-list list-unstyled">
-            {% for linea in receta['ingredientes'].split('\n') %}
-              {% if linea.strip() %}
-                <li class="ingredient-item">
-                  <span class="ingredient-dot">•</span>
-                  {{ linea.strip() }}
-                </li>
-              {% endif %}
-            {% endfor %}
-          </ul>
-        </div>
-      </div>
-
-      <div class="col-lg-7">
-        <div class="recipe-section">
-          <h2 class="section-title mb-4">
-            <img src="{{ url_for('static', filename='img/preparacion.png') }}" alt="Preparación" class="section-icon-img">
-            Pasos de preparación
-          </h2>
-          <ol class="steps-list">
-            {% for linea in receta['pasos'].split('\n') %}
-              {% if linea.strip() %}
-                <li class="step-item">{{ linea.strip().lstrip('0123456789. ') }}</li>
-              {% endif %}
-            {% endfor %}
-          </ol>
-        </div>
-      </div>
-      
+    <!-- Botón Volver -->
+    <div class="recipe-article-footer">
+      <a href="{{ url_for('recetas.index') }}" class="btn btn-outline-primary btn-lg">
+        ← Volver a todas las recetas
+      </a>
     </div>
-
   </article>
+
 </div>
 {% endblock %}

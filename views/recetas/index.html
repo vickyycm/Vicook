@@ -2,36 +2,74 @@
 {% block titulo %}VICOOK · Inicio{% endblock %}
 
 {% block contenido %}
-<section class="hero-section py-5 text-center">
-  <div class="container-lg">
-    <h1 class="display-4 fw-bold mb-3">Todas tus recetas en un lugar</h1>
-    <p class="lead text-muted mb-4">
-      Explorá nuestra colección o <a href="{{ url_for('recetas.nueva_receta') }}" class="text-decoration-none fw-bold link-highlight">creá la tuya propia</a>
+<!-- HERO SECTION -->
+<section class="hero-section-landing">
+  <div class="container-lg h-100 d-flex flex-column justify-content-center align-items-center">
+    <h1 class="display-3 fw-bold mb-3 text-center">Todas tus recetas en un lugar</h1>
+    <p class="lead text-muted text-center mb-5" style="max-width: 500px;">
+      Descubrí recetas deliciosas, creá las tuyas propias y compartí tu pasión por la cocina
     </p>
+    <div class="d-flex gap-3 justify-content-center flex-wrap">
+      <a href="#recetas" class="btn btn-primary btn-lg">
+        Explorar recetas
+      </a>
+      <a href="{{ url_for('recetas.nueva_receta') }}" class="btn btn-outline-primary btn-lg">
+        Crear nueva receta
+      </a>
+    </div>
   </div>
 </section>
 
-<section class="recipes-section py-5">
-  <div class="container-lg">
-    {% if recetas %}
-      <div class="row g-4">
-        {% for receta in recetas %}
-          <div class="col-12 col-sm-6 col-lg-4">
-            <a href="{{ url_for('recetas.detalle', receta_id=receta['id']) }}" class="recipe-card-link text-decoration-none">
-              <div class="recipe-card h-100 shadow-sm">
-                <div class="recipe-card-icon">🍽️</div>
-                <div class="card-body d-flex flex-column">
-                  <h5 class="card-title fw-bold">{{ receta['nombre'] }}</h5>
-                  <p class="card-text text-muted flex-grow-1">
-                    {{ receta['descripcion'][:80] }}{% if receta['descripcion']|length > 80 %}…{% endif %}
-                  </p>
-                  <div class="card-footer-link">
-                    <span>Ver receta →</span>
-                  </div>
-                </div>
-              </div>
-            </a>
+<!-- CATEGORÍAS SECTION -->
+{% if categorias %}
+<section class="categorias-section py-5">
+  <div class="container-lg mb-4">
+    <h2 class="fs-4 fw-bold mb-4">Categorías</h2>
+  </div>
+  
+  <div class="categorias-scroll-wrapper">
+    <div class="container-lg">
+      <div class="categorias-scroll-container">
+        {% for categoria in categorias %}
+          <div class="categoria-card">
+            <div class="categoria-icon">
+              <img src="{{ url_for('static', filename='img/chef.png') }}" alt="{{ categoria['nombre'] }}" class="categoria-icon-img">
+            </div>
+            <h3 class="categoria-name">{{ categoria['nombre'] }}</h3>
+            <p class="categoria-description">{{ categoria['descripcion'] }}</p>
           </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- RECETAS SECTION -->
+<section class="recipes-section py-5" id="recetas">
+  <div class="container-lg">
+    <h2 class="fs-4 fw-bold mb-4">Recetas destacadas</h2>
+    
+    {% if recetas %}
+      <div class="recipes-list">
+        {% for receta in recetas %}
+          <a href="{{ url_for('recetas.detalle', receta_id=receta['id']) }}" class="recipe-card-horizontal text-decoration-none">
+            <div class="recipe-card-img">
+              <img src="{{ url_for('static', filename='img/chef.png') }}" alt="{{ receta['nombre'] }}" class="recipe-img">
+            </div>
+            <div class="recipe-card-content">
+              <div class="recipe-header">
+                <h5 class="recipe-title">{{ receta['nombre'] }}</h5>
+                {% if receta.get('categoria_nombre') %}
+                  <span class="badge bg-primary">{{ receta['categoria_nombre'] }}</span>
+                {% endif %}
+              </div>
+              <p class="recipe-description">{{ receta['descripcion'] }}</p>
+              <div class="recipe-footer">
+                <span class="read-more">Ver receta →</span>
+              </div>
+            </div>
+          </a>
         {% endfor %}
       </div>
     {% else %}

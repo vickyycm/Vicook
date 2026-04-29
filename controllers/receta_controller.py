@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for
-from models.receta_model import obtener_todas_las_recetas, obtener_receta_por_id, crear_receta
+from models.receta_model import obtener_todas_las_recetas, obtener_receta_por_id, crear_receta, obtener_todas_las_categorias
 
 receta_bp = Blueprint("recetas", __name__)
 
@@ -7,7 +7,8 @@ receta_bp = Blueprint("recetas", __name__)
 @receta_bp.route("/")
 def index():
     recetas = obtener_todas_las_recetas()
-    return render_template("recetas/index.html", recetas=recetas)
+    categorias = obtener_todas_las_categorias()
+    return render_template("recetas/index.html", recetas=recetas, categorias=categorias)
 
 #cada receta especifica
 @receta_bp.route("/receta/<int:receta_id>")
@@ -25,6 +26,13 @@ def nueva_receta():
         descripcion  = request.form.get("descripcion", "").strip()
         ingredientes = request.form.get("ingredientes", "").strip()
         pasos        = request.form.get("pasos", "").strip()
+        categoria_id = request.form.get("categoria_id", None)
+        
+        # Convertir a None si es vacío o "null"
+        if not categoria_id or categoria_id == "null":
+            categoria_id = None
+        else:
+            categoria_id = int(categoria_id)
 
         errores = []
         if not nombre:
@@ -37,10 +45,12 @@ def nueva_receta():
             errores.append("Los pasos de preparación son obligatorios.")
 
         if errores:
+            categorias = obtener_todas_las_categorias()
             return render_template("recetas/nueva.html", errores=errores,
-                                   datos_form=request.form)
+                                   datos_form=request.form, categorias=categorias)
 
-        receta_id = crear_receta(nombre, descripcion, ingredientes, pasos)
+        receta_id = crear_receta(nombre, descripcion, ingredientes, pasos, categoria_id)
         return redirect(url_for("recetas.detalle", receta_id=receta_id))
 
-    return render_template("recetas/nueva.html", errores=[], datos_form={})
+    categorias = obtener_todas_las_categorias()
+    return render_template("recetas/nueva.html", errores=[], datos_form={}, categorias=categorias)
