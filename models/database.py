@@ -68,7 +68,7 @@ def init_db():
         recetas_ejemplo = [
             (
                 "Galletitas de café",
-                "Galletitas crujientes con un toque de café, perfectas para acompañar tu bebida favorita.",
+                "Galletitas perfectas para acompañar tu bebida favorita.",
                 "200g de manteca\n150g de azúcar\n1 huevo\n300g de harina\n2 cucharaditas de café instantáneo disuelto en 1 cucharada de agua caliente",
                 "1. Batir la manteca y el azúcar hasta obtener una mezcla cremosa.\n2. Agregar el huevo y el café disuelto, mezclar bien.\n3. Incorporar la harina poco a poco hasta formar una masa homogénea.\n4. Formar bolitas con la masa, colocarlas en una bandeja para hornear y aplastarlas ligeramente.\n5. Hornear a 180°C por 12-15 minutos o hasta que estén doradas.",
                 cat_merienda,

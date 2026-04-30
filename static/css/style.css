@@ -11,9 +11,9 @@
   --border-light: #ECF0F1;
   --danger: #E74C3C;
   --white: #FFFFFF;
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 12px rgba(255, 160, 0, 0.1);
-  --shadow-lg: 0 12px 24px rgba(255, 160, 0, 0.15);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 12px rgba(255, 160, 0, 0.2);
+  --shadow-lg: 0 12px 24px rgba(255, 160, 0, 0.3);
   --transition: all 0.3s ease;
   --radius: 8px;
   --radius-lg: 12px;
@@ -22,7 +22,7 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html, body { height: 100%; }
 body {
-  background-color: var(--pale-yellow);
+  background-color: #FFF4D6;
   color: var(--text-dark);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.6;
@@ -139,14 +139,16 @@ a:hover { color: var(--primary-yellow); }
 }
 
 .categorias-scroll-wrapper {
-  overflow: hidden;
-  padding: 0 0 2rem 0;
+  overflow-x: hidden;
+  overflow-y: visible;
+  padding: 1rem 0 2rem 0;
 }
 
 .categorias-scroll-container {
   display: flex;
   gap: 1.5rem;
   overflow-x: auto;
+  padding-left: 1rem;
   padding-right: 1rem;
   scroll-behavior: smooth;
 }
@@ -190,7 +192,7 @@ a:hover { color: var(--primary-yellow); }
 .categoria-card:hover {
   border-color: var(--primary-yellow);
   box-shadow: var(--shadow-lg);
-  transform: translateY(-8px);
+  transform: translateY(-4px);
 }
 
 .categoria-card:hover::after {
