@@ -22,7 +22,7 @@
 {% if categorias %}
 <section class="categorias-section py-5">
   <div class="container-lg mb-4">
-    <h2 class="fs-4 fw-bold mb-4">Categorías</h2>
+    <h2 class="fs-4 fw-bold mb-2">Categorías</h2>
   </div>
   
   <div class="categorias-scroll-wrapper">
@@ -68,7 +68,7 @@
                 </div>
               </div>
             </a>
-            <div style="display: flex; gap: 0.5rem; padding: 1rem; border-left: 1px solid var(--border-light); background: var(--pale-yellow); flex-direction: column; justify-content: center;">
+            <div style="display: flex; gap: 0.5rem; padding: 1rem; border-left: 1px solid var(--border-light); background: var(--pale-yellow); flex-direction: column; justify-content: center; min-width: 110px; flex-wrap: wrap;">
               <a href="{{ url_for('recetas.editar_receta', receta_id=receta['id']) }}" class="btn btn-sm btn-outline-primary" title="Editar">
                 Editar
               </a>
