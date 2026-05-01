@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block titulo %}Administración de ingredientes · VICOOK{% endblock %}
+
+{% block contenido %}
+<div class="container-lg py-5">
+  
+  <div class="d-flex justify-content-between align-items-center mb-5">
+    <div>
+      <h1 class="display-5 fw-bold mb-2">Ingredientes</h1>
+      <p class="text-muted">Administra los ingredientes disponibles</p>
+    </div>
+    <a href="{{ url_for('recetas.index') }}" class="btn btn-outline-primary btn-lg">
+      ← Volver a recetas
+    </a>
+  </div>
+
+  {% if request.args.get('error') %}
+    <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+      <strong>Error:</strong> {{ request.args.get('error') }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+  {% endif %}
+
+  <div class="mb-5">
+    <a href="{{ url_for('ingredientes.nuevo_ingrediente') }}" class="btn btn-primary btn-lg">
+      Nuevo ingrediente
+    </a>
+  </div>
+
+  {% if ingredientes %}
+    <div class="ingredientes-table-container">
+      <table class="table ingredientes-table">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th class="text-center">Recetas</th>
+            <th class="text-end">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for ingrediente in ingredientes %}
+            <tr>
+              <td class="ingrediente-table-name">{{ ingrediente['nombre'] }}</td>
+              <td class="text-center">
+                <span class="badge bg-primary">{{ ingrediente.get('recetas_count', 0) }}</span>
+              </td>
+              <td class="ingrediente-table-actions">
+                <div class="d-flex gap-2 justify-content-end">
+                  <a href="{{ url_for('ingredientes.editar_ingrediente', ingrediente_id=ingrediente['id']) }}" class="btn btn-sm btn-outline-primary">
+                    Editar
+                  </a>
+                  <form method="POST" action="{{ url_for('ingredientes.eliminar_ingrediente_route', ingrediente_id=ingrediente['id']) }}" style="display: inline;">
+                    <button type="submit" class="btn btn-sm btn-outline-danger" 
+                            {% if ingrediente.get('recetas_count', 0) > 0 %}disabled title="No se puede eliminar porque está asociado a recetas"{% endif %}
+                            {% if ingrediente.get('recetas_count', 0) == 0 %}onclick="return confirm('¿Estás seguro de que querés eliminar \"{{ ingrediente['nombre'] }}\"?')"{% endif %}>
+                      Eliminar
+                    </button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="alert alert-info" role="alert">
+      <strong>No hay ingredientes creados aún.</strong>
+      <a href="{{ url_for('ingredientes.nuevo_ingrediente') }}" class="alert-link">Crea el primer ingrediente aquí.</a>
+    </div>
+  {% endif %}
+
+</div>
+{% endblock %}

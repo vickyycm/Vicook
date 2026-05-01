@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from models.receta_model import (
     obtener_todas_las_recetas, obtener_receta_por_id, crear_receta,
-    actualizar_receta, eliminar_receta, obtener_todas_las_categorias
+    actualizar_receta, eliminar_receta, obtener_todas_las_categorias, obtener_ingredientes_de_receta
 )
 
 receta_bp = Blueprint("recetas", __name__)
@@ -51,7 +51,8 @@ def detalle(receta_id):
     receta = obtener_receta_por_id(receta_id)
     if receta is None:
         return render_template("recetas/404.html"), 404
-    return render_template("recetas/detalle.html", receta=receta)
+    ingredientes = obtener_ingredientes_de_receta(receta_id)
+    return render_template("recetas/detalle.html", receta=receta, ingredientes=ingredientes)
 
 #editar receta
 @receta_bp.route("/<int:receta_id>/editar", methods=["GET", "POST"])

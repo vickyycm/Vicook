@@ -2,12 +2,14 @@ from flask import Flask, redirect, url_for
 from models.database import init_db, close_db
 from controllers.receta_controller import receta_bp
 from controllers.categoria_controller import categoria_bp
+from controllers.ingrediente_controller import ingrediente_bp
 
 app = Flask(__name__, template_folder="views")
 
 
 app.register_blueprint(receta_bp, url_prefix="")
 app.register_blueprint(categoria_bp, url_prefix="/categorias")
+app.register_blueprint(ingrediente_bp, url_prefix="/ingredientes")
 app.teardown_appcontext(close_db)
 
 #ruta raíz

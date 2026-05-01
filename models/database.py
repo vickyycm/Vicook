@@ -37,10 +37,30 @@ def init_db():
             id          INTEGER PRIMARY KEY AUTOINCREMENT,
             nombre      TEXT    NOT NULL,
             descripcion TEXT    NOT NULL,
-            ingredientes TEXT   NOT NULL,
+            ingredientes TEXT,
             pasos       TEXT    NOT NULL,
             categoria_id INTEGER,
             FOREIGN KEY (categoria_id) REFERENCES categorias(id) ON DELETE SET NULL
+        )
+    """)
+
+#crear tabla de ingredientes
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS ingredientes (
+            id          INTEGER PRIMARY KEY AUTOINCREMENT,
+            nombre      TEXT    NOT NULL UNIQUE
+        )
+    """)
+
+#crear tabla de relación receta-ingrediente
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS receta_ingrediente (
+            receta_id      INTEGER NOT NULL,
+            ingrediente_id INTEGER NOT NULL,
+            cantidad       TEXT,
+            PRIMARY KEY (receta_id, ingrediente_id),
+            FOREIGN KEY (receta_id) REFERENCES recetas(id) ON DELETE CASCADE,
+            FOREIGN KEY (ingrediente_id) REFERENCES ingredientes(id) ON DELETE CASCADE
         )
     """)
     conn.commit()

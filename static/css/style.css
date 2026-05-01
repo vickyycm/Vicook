@@ -558,6 +558,12 @@ a:hover { color: var(--primary-yellow); }
   box-shadow: 0 4px 12px rgba(255, 160, 0, 0.2);
 }
 
+.ingredient-chip-qty {
+  opacity: 0.85;
+  font-size: 0.85rem;
+  font-weight: 400;
+}
+
 .steps-article {
   display: flex;
   flex-direction: column;
@@ -783,3 +789,195 @@ html { scroll-behavior: smooth; }
 ::-webkit-scrollbar-track { background: var(--border-light); }
 ::-webkit-scrollbar-thumb { background: var(--primary-yellow); border-radius: 5px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--dark-yellow); }
+
+.ingredientes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.ingrediente-item-card {
+  background: var(--white);
+  border: 2px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: var(--transition);
+  box-shadow: var(--shadow-sm);
+}
+
+.ingrediente-item-card:hover {
+  border-color: var(--primary-yellow);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-4px);
+}
+
+.ingrediente-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: 2px solid var(--secondary-yellow);
+  padding-bottom: 1rem;
+}
+
+.ingrediente-item-title {
+  color: var(--text-dark);
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.ingrediente-item-description {
+  color: var(--text-light);
+  line-height: 1.6;
+  font-size: 0.95rem;
+  flex: 1;
+  margin: 0;
+}
+
+.ingrediente-item-footer {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: auto;
+}
+
+.ingrediente-item-footer .btn {
+  flex: 1;
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 0.6rem;
+  transition: var(--transition);
+}
+
+.ingrediente-item-footer .btn-outline-primary {
+  color: var(--dark-yellow);
+  border-color: var(--dark-yellow);
+}
+
+.ingrediente-item-footer .btn-outline-primary:hover {
+  background-color: var(--dark-yellow);
+  border-color: var(--dark-yellow);
+  color: var(--white);
+  transform: translateY(-2px);
+}
+
+.ingrediente-item-footer .btn-outline-danger {
+  color: var(--danger);
+  border-color: var(--danger);
+}
+
+.ingrediente-item-footer .btn-outline-danger:hover:not(:disabled) {
+  background-color: var(--danger);
+  border-color: var(--danger);
+  color: var(--white);
+  transform: translateY(-2px);
+}
+
+.ingrediente-item-footer .btn-outline-danger:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: var(--border-light);
+}
+
+.ingredientes-table-container {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--border-light);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.ingredientes-table {
+  margin-bottom: 0;
+  background-color: var(--white);
+}
+
+.ingredientes-table thead {
+  background: linear-gradient(135deg, var(--light-yellow), var(--pale-yellow));
+  border-bottom: 2px solid var(--secondary-yellow);
+}
+
+.ingredientes-table thead th {
+  color: var(--text-dark);
+  font-weight: 700;
+  padding: 1rem 1.25rem;
+  border: none;
+  font-size: 0.95rem;
+}
+
+.ingredientes-table tbody tr {
+  border-bottom: 1px solid var(--border-light);
+  transition: var(--transition);
+}
+
+.ingredientes-table tbody tr:hover {
+  background-color: var(--pale-yellow);
+}
+
+.ingredientes-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.ingredientes-table td {
+  padding: 0.75rem 1.25rem;
+  vertical-align: middle;
+  color: var(--text-dark);
+}
+
+.ingrediente-table-name {
+  font-weight: 600;
+  color: var(--text-dark);
+  min-width: 150px;
+}
+
+.ingrediente-table-unit {
+  color: var(--text-light);
+  font-size: 0.95rem;
+  min-width: 100px;
+}
+
+.ingrediente-table-actions {
+  text-align: right;
+}
+
+.ingredients-table {
+  overflow-x: auto;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-light);
+}
+
+.ingredients-table table {
+  margin-bottom: 0;
+  background-color: var(--white);
+}
+
+.ingredients-table tbody tr {
+  border-bottom: 1px solid var(--border-light);
+}
+
+.ingredients-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.ingredients-table td {
+  padding: 0.75rem 1.25rem !important;
+  vertical-align: middle;
+}
+
+.ingredient-name {
+  font-weight: 600;
+  color: var(--text-dark);
+  min-width: 150px;
+}
+
+.ingredient-quantity {
+  color: var(--text-light);
+  font-size: 0.95rem;
+  min-width: 100px;
+  white-space: nowrap;
+}

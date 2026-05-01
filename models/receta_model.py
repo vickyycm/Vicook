@@ -61,3 +61,15 @@ def obtener_categoria_por_id(categoria_id):
     db = get_db()
     row = db.execute("SELECT * FROM categorias WHERE id = ?", (categoria_id,)).fetchone()
     return _row_to_dict(row)
+
+#obtener ingredientes de una receta con cantidad
+def obtener_ingredientes_de_receta(receta_id):
+    db = get_db()
+    rows = db.execute("""
+        SELECT i.id, i.nombre, i.unidad, ri.cantidad
+        FROM receta_ingrediente ri
+        JOIN ingredientes i ON ri.ingrediente_id = i.id
+        WHERE ri.receta_id = ?
+        ORDER BY i.nombre
+    """, (receta_id,)).fetchall()
+    return [_row_to_dict(row) for row in rows]

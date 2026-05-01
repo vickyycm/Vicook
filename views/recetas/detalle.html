@@ -27,13 +27,28 @@
           Ingredientes
         </h2>
         
-        <div class="ingredients-chips">
-          {% for linea in receta['ingredientes'].split('\n') %}
-            {% if linea.strip() %}
-              <span class="ingredient-chip">{{ linea.strip() }}</span>
-            {% endif %}
-          {% endfor %}
-        </div>
+        {% if ingredientes %}
+          <div class="ingredients-chips">
+            {% for ingrediente in ingredientes %}
+              <span class="ingredient-chip">
+                {{ ingrediente['nombre'] }}
+                {% if ingrediente.get('cantidad') %}
+                  <span class="ingredient-chip-qty">({{ ingrediente['cantidad'] }})</span>
+                {% endif %}
+              </span>
+            {% endfor %}
+          </div>
+        {% elif receta.get('ingredientes') %}
+          <div class="ingredients-chips">
+            {% for linea in receta['ingredientes'].split('\n') %}
+              {% if linea.strip() %}
+                <span class="ingredient-chip">{{ linea.strip() }}</span>
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% else %}
+          <p class="text-muted fst-italic">Sin ingredientes especificados</p>
+        {% endif %}
       </section>
 
       <section class="recipe-section-article">
