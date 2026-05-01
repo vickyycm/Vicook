@@ -26,21 +26,21 @@ def obtener_receta_por_id(receta_id):
     return _row_to_dict(row)
 
 #inserta la receta y da id
-def crear_receta(nombre, descripcion, ingredientes, pasos, categoria_id=None):
+def crear_receta(nombre, descripcion, pasos, categoria_id=None):
     db = get_db()
     cursor = db.execute(
         "INSERT INTO recetas (nombre, descripcion, ingredientes, pasos, categoria_id) VALUES (?, ?, ?, ?, ?)",
-        (nombre, descripcion, ingredientes, pasos, categoria_id),
+        (nombre, descripcion, "", pasos, categoria_id),
     )
     db.commit()
     return cursor.lastrowid
 
 #actualizar receta existente
-def actualizar_receta(receta_id, nombre, descripcion, ingredientes, pasos, categoria_id=None):
+def actualizar_receta(receta_id, nombre, descripcion, pasos, categoria_id=None):
     db = get_db()
     db.execute(
         "UPDATE recetas SET nombre = ?, descripcion = ?, ingredientes = ?, pasos = ?, categoria_id = ? WHERE id = ?",
-        (nombre, descripcion, ingredientes, pasos, categoria_id, receta_id),
+        (nombre, descripcion, "", pasos, categoria_id, receta_id),
     )
     db.commit()
 
@@ -66,10 +66,25 @@ def obtener_categoria_por_id(categoria_id):
 def obtener_ingredientes_de_receta(receta_id):
     db = get_db()
     rows = db.execute("""
-        SELECT i.id, i.nombre, i.unidad, ri.cantidad
+        SELECT i.id, i.nombre, ri.cantidad
         FROM receta_ingrediente ri
         JOIN ingredientes i ON ri.ingrediente_id = i.id
         WHERE ri.receta_id = ?
         ORDER BY i.nombre
     """, (receta_id,)).fetchall()
     return [_row_to_dict(row) for row in rows]
+
+#eliminar ingredientes de una receta
+def eliminar_ingredientes_de_receta(receta_id):
+    db = get_db()
+    db.execute("DELETE FROM receta_ingrediente WHERE receta_id = ?", (receta_id,))
+    db.commit()
+
+#agregar un ingrediente a una receta
+def agregar_ingrediente_a_receta(receta_id, ingrediente_id, cantidad):
+    db = get_db()
+    db.execute(
+        "INSERT INTO receta_ingrediente (receta_id, ingrediente_id, cantidad) VALUES (?, ?, ?)",
+        (receta_id, ingrediente_id, cantidad if cantidad else None),
+    )
+    db.commit()

@@ -981,3 +981,45 @@ html { scroll-behavior: smooth; }
   min-width: 100px;
   white-space: nowrap;
 }
+
+.ingredientes-selection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: var(--pale-yellow);
+  border-radius: var(--radius);
+  border: 1px solid var(--secondary-yellow);
+}
+
+.ingrediente-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  background: var(--white);
+  border-radius: calc(var(--radius) / 2);
+}
+
+.ingrediente-row .form-check-input {
+  width: 20px;
+  height: 20px;
+  border-color: var(--primary-yellow);
+  cursor: pointer;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.ingrediente-row .form-check-input:checked {
+  background-color: var(--dark-yellow);
+  border-color: var(--dark-yellow);
+}
+
+.ingrediente-row .form-check-label {
+  cursor: pointer;
+  user-select: none;
+  color: var(--text-dark);
+  font-weight: 500;
+  margin: 0;
+  flex: 1;
+}

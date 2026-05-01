@@ -8,7 +8,7 @@ def _row_to_dict(row):
 def obtener_todos_los_ingredientes():
     db = get_db()
     rows = db.execute("""
-        SELECT i.id, i.nombre, i.unidad, COUNT(ri.receta_id) as recetas_count
+        SELECT i.id, i.nombre, COUNT(ri.receta_id) as recetas_count
         FROM ingredientes i
         LEFT JOIN receta_ingrediente ri ON i.id = ri.ingrediente_id
         GROUP BY i.id
