@@ -51,19 +51,8 @@ def actualizar_ingrediente(ingrediente_id, nombre):
 #eliminar ingrediente si no tiene recetas asociadas
 def eliminar_ingrediente(ingrediente_id):
     db = get_db()
-    
-#verificar si tiene recetas asociadas
-    recetas_count = db.execute(
-        "SELECT COUNT(*) as count FROM receta_ingrediente WHERE ingrediente_id = ?",
-        (ingrediente_id,)
-    ).fetchone()["count"]
-    
-    if recetas_count > 0:
-        return False
-    
     db.execute("DELETE FROM ingredientes WHERE id = ?", (ingrediente_id,))
     db.commit()
-    return True
 
 #contar recetas por ingrediente
 def contar_recetas_por_ingrediente(ingrediente_id):

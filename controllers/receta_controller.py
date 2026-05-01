@@ -8,7 +8,6 @@ from models.ingrediente_model import obtener_todos_los_ingredientes
 
 receta_bp = Blueprint("recetas", __name__)
 
-#pone en lista todas las recetas
 @receta_bp.route("/")
 def index():
     recetas = obtener_todas_las_recetas()
@@ -27,7 +26,6 @@ def nueva_receta():
         pasos        = request.form.get("pasos", "").strip()
         categoria_id = request.form.get("categoria_id", "").strip()
         
-        # Obtener ingredientes seleccionados
         ingrediente_ids = request.form.getlist("ingrediente_id[]")
 
         errores = []
@@ -45,7 +43,6 @@ def nueva_receta():
         categoria_id_int = int(categoria_id) if categoria_id else None
         receta_id = crear_receta(nombre, descripcion, pasos, categoria_id_int)
         
-        # Insertar ingredientes de la receta
         for ingrediente_id in ingrediente_ids:
             if ingrediente_id:
                 agregar_ingrediente_a_receta(receta_id, int(ingrediente_id), None)
@@ -81,7 +78,6 @@ def editar_receta(receta_id):
         pasos        = request.form.get("pasos", "").strip()
         categoria_id = request.form.get("categoria_id", "").strip()
         
-        # Obtener ingredientes seleccionados
         ingrediente_ids = request.form.getlist("ingrediente_id[]")
 
         errores = []
@@ -100,10 +96,8 @@ def editar_receta(receta_id):
         categoria_id_int = int(categoria_id) if categoria_id else None
         actualizar_receta(receta_id, nombre, descripcion, pasos, categoria_id_int)
         
-        # Eliminar ingredientes anteriores
         eliminar_ingredientes_de_receta(receta_id)
         
-        # Insertar nuevos ingredientes
         for ingrediente_id in ingrediente_ids:
             if ingrediente_id:
                 agregar_ingrediente_a_receta(receta_id, int(ingrediente_id), None)

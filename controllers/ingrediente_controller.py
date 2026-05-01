@@ -12,7 +12,6 @@ def index():
     ingredientes = obtener_todos_los_ingredientes()
     return render_template("ingredientes/index.html", ingredientes=ingredientes)
 
-#crear nuevo ingrediente
 @ingrediente_bp.route("/nuevo", methods=["GET", "POST"])
 def nuevo_ingrediente():
     if request.method == "POST":
@@ -74,4 +73,4 @@ def eliminar_ingrediente_route(ingrediente_id):
         return redirect(url_for("ingredientes.index", error=f"No se puede eliminar '{ingrediente['nombre']}' porque está asociado a {recetas_count} receta(s)."))
     
     eliminar_ingrediente(ingrediente_id)
-    return redirect(url_for("ingredientes.index"))
+    return redirect(url_for("ingredientes.index", success=f"Ingrediente '{ingrediente['nombre']}' eliminado correctamente."))
